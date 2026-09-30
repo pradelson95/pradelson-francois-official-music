@@ -31,7 +31,7 @@ const tracks = [
     },
     {
         title: "Semilla sobre la piedra",
-        file: "semilla_sobre_la_piedra.mp3",  // <-- NUEVA
+        file: "Semilla_sobre_la_piedra.mp3",  // <-- NUEVA
         duration: "2:46"
     }
 ];
