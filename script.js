@@ -17,7 +17,22 @@ const tracks = [
     {
         title: "Ainda Sou Eu",
         file: "Ainda_sou_eu.mp3",
-        duration: "2:59"
+        duration: "3:01"
+    },
+    {
+        title: "Los que nunca se van",
+        file: "Los_que_nunca_se_van.mp3",  // <-- NUEVA
+        duration: "2:49"
+    },
+    {
+        title: "Eras tú",
+        file: "Eras_tuu.mp3",                 // <-- NUEVA
+        duration: "3:00"
+    },
+    {
+        title: "Semilla sobre la piedra",
+        file: "semilla_sobre_la_piedra.mp3",  // <-- NUEVA
+        duration: "2:46"
     }
 ];
 
