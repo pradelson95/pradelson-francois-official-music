@@ -2,7 +2,6 @@ const audioPlayer = document.getElementById('audioPlayer');
 const playerBar = document.getElementById('playerBar');
 const playerTitle = document.getElementById('playerTitle');
 const mainPlayPauseSvg = document.getElementById('mainPlayPauseSvg');
-const progressBarFill = document.getElementById('progressBarFill');
 const progressBarBg = document.getElementById('progressBarBg');
 const currentTimeEl = document.getElementById('currentTime');
 const totalDurationEl = document.getElementById('totalDuration');
@@ -106,7 +105,8 @@ function toggleLyrics(index) {
 audioPlayer.addEventListener('timeupdate', () => {
     if (audioPlayer.duration) {
         const progressPercent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-        progressBarFill.style.width = `${progressPercent}%`;
+        progressBarBg.value = progressPercent;
+        progressBarBg.style.setProperty('--progress', `${progressPercent}%`);
         currentTimeEl.textContent = formatTime(audioPlayer.currentTime);
     }
 });
@@ -115,12 +115,12 @@ audioPlayer.addEventListener('loadedmetadata', () => {
     totalDurationEl.textContent = formatTime(audioPlayer.duration);
 });
 
-function seekAudio(event) {
-    const rect = progressBarBg.getBoundingClientRect();
-    const clientX = event.clientX || (event.touches ? event.touches[0].clientX : 0);
-    const clickPosition = (clientX - rect.left) / rect.width;
-    audioPlayer.currentTime = clickPosition * audioPlayer.duration;
-}
+progressBarBg.addEventListener('input', () => {
+    if (Number.isFinite(audioPlayer.duration) && audioPlayer.duration > 0) {
+        audioPlayer.currentTime = (Number(progressBarBg.value) / 100) * audioPlayer.duration;
+        currentTimeEl.textContent = formatTime(audioPlayer.currentTime);
+    }
+});
 
 function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
@@ -131,6 +131,7 @@ function formatTime(seconds) {
 audioPlayer.addEventListener('ended', () => {
     document.getElementById(`trackItem${currentTrackIndex}`).classList.remove('playing');
     setIcons(playPath);
-    progressBarFill.style.width = '0%';
+    progressBarBg.value = 0;
+    progressBarBg.style.setProperty('--progress', '0%');
     audioPlayer.currentTime = 0;
 });
